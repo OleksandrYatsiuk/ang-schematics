@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchemanticsForModule",
+  "title": "Module Schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
+    },
+    "path": {
+      "type": "string",
+      "default": "app"
+    },
+    "appRoot": {
+      "type": "string"
+    },
+    "sourceDir": {
+      "type": "string",
+      "default": "src"
+    },
+    "route": {
+      "type": "string",
+      "default": "root",
+      "description": "Set imported route name",
+      "x-prompt": "Enter router name for new module (e.g.: root)"
+    },
+    "module": {
+      "type": "string",
+      "default": "app.routing.module.ts",
+      "alias": "m",
+      "description": "Set information about routing module",
+      "x-prompt": "Enter your main routing module path or set relative path manually (e.g.: app.routing.module.ts)"
+    }
+  }
+}

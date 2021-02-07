@@ -1,0 +1,15 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "module": {
+      "description": "Generate module and update router module",
+      "factory": "./module/index",
+      "schema": "./module/schema.json",
+      "aliases": ["m"]
+    },
+    "ng-add": {
+      "description": "Add library to Angular project dependencies and install it.",
+      "factory": "./ng-add/index#ngAdd"
+    }
+  }
+}

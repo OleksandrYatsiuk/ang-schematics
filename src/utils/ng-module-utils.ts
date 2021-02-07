@@ -73,7 +73,6 @@ function createModuleContext(host: Tree, options: ModuleOptions): AddToModuleCon
     result.source = ts.createSourceFile(options.module, sourceText, ts.ScriptTarget.Latest, true);
     result.relativePath = buildRelativePath(options.module, componentPath);
     result.classifiedName = classify(`${options.name}Module`);
-    console.log(buildRelativePath(options.module, options.module))
     return result;
 }
 

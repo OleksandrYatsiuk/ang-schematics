@@ -18,8 +18,8 @@ import { getSourceNodes, insertImport } from '@schematics/angular/utility/ast-ut
 function asyncRouteTemplate(route: string, path: string, moduleName: string): string {
     return `
 {
-    path: ${route},
-    loadChildren: async () => ((await import(${path})).${moduleName})
+    path: '${route}',
+    loadChildren: async () => ((await import('${path}')).${moduleName})
 }`;
 }
 

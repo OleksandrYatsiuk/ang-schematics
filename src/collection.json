@@ -25,6 +25,11 @@
       "description": "Add list of modules to Angular project",
       "factory": "./modules/index#modules",
       "schema": "./modules/schema.json"
+    },
+    "shared": {
+      "description": "Add shared module to Angular Project",
+      "factory": "./shared/index#shared",
+      "schema": "./shared/schema.json"
     }
   }
 }

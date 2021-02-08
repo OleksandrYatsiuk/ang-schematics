@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchemanticsForServices",
+  "title": "Service Schema",
+  "type": "object",
+  "properties": {
+    "declare": {
+      "type": "boolean",
+      "description": "Declare shared module to compiler path",
+      "default": false,
+      "x-prompt": {
+        "message": "Would you like the declare module to compiler options?",
+        "type": "confirmation"
+      }
+    },
+    "components": {
+      "type": "array",
+      "description": "The guard for project",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      },
+      "x-prompt": {
+        "message": "Which components would you like to generate?",
+        "type": "list",
+        "multiselect": true,
+        "items": [
+          "breadcrumbs",
+          "paginator"
+        ]
+      }
+    },
+    "path": {
+      "type": "string",
+      "default": "app"
+    },
+    "sourceDir": {
+      "type": "string",
+      "default": "src"
+    }
+  }
+}

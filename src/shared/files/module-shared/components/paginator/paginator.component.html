@@ -1,0 +1,53 @@
+<!-- hide paginator if list contains only one page -->
+<div [ngClass]="{ 'class-hide-paginator': totalPages < 2 }">
+    <p-paginator
+      #paginator
+      [rows]="rows"
+      [styleClass]="styleClass"
+      [pageLinkSize]="pageLinkSize"
+      [totalRecords]="totalRecords"
+      (onPageChange)="onPageChange($event)"
+      [templateRight]="paginatorRight"
+      [templateLeft]="paginatorLeft"
+    >
+    </p-paginator>
+  </div>
+  
+  <ng-template #paginatorLeft>
+    <span class="p-paginator-pages">
+      <button
+        class="p-paginator-element p-paginator-page"
+        (click)="onSelectPage(1)"
+        *ngIf="page >= pageLinkSize"
+      >
+        <span class="">1</span>
+      </button>
+      <button
+        *ngIf="page > pageLinkSize"
+        class="p-paginator-element p-paginator-page"
+        (click)="onSelectPointsLeft(page)"
+      >
+        <span>...</span>
+      </button>
+    </span>
+  </ng-template>
+  
+  <ng-template #paginatorRight>
+    <span class="p-paginator-pages">
+      <button
+        *ngIf="page <= totalPages - pageLinkSize"
+        class="p-paginator-element p-paginator-page"
+        (click)="onSelectPointsRight(page)"
+      >
+        <span>...</span>
+      </button>
+      <button
+        *ngIf="page <= totalPages - pageLinkSize"
+        class="p-paginator-element p-paginator-page"
+        (click)="onSelectPage(totalPages)"
+      >
+        <span>{{ totalPages }}</span>
+      </button>
+    </span>
+  </ng-template>
+  

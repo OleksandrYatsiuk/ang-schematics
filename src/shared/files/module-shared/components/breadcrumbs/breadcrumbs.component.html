@@ -1,0 +1,47 @@
+<ul
+  class="breads"
+  [ngClass]="invert ? 'breads--invert' : 'breads--spacer'"
+  itemscope
+  itemtype="https://schema.org/BreadcrumbList"
+>
+  <li
+    class="bread home"
+    itemprop="itemListElement"
+    itemscope
+    itemtype="https://schema.org/ListItem"
+  >
+    <a [routerLink]="['/' | langPrefix]" itemprop="item" class="bread__link">
+      <span [inlineSVG]="invert ? 'icon-home-yellow.svg' : 'icon-home.svg'" class="icon"></span>
+      <span itemprop="name">{{ getRes('homeTitleLabel') }}</span>
+    </a>
+    <meta itemprop="position" content="1" />
+  </li>
+  <ng-container *ngIf="parents?.length">
+    <li
+      class="bread"
+      itemprop="itemListElement"
+      itemscope
+      itemtype="https://schema.org/ListItem"
+      *ngFor="let parent of parents; let i = index; trackBy: trackItem"
+    >
+      <a
+        [routerLink]="[parent?.url | langPrefix]"
+        itemprop="item"
+        class="bread__link"
+        [queryParams]="parent?.queryParams"
+        ><span itemprop="name">{{ parent?.title || '...' }}</span>
+      </a>
+      <meta itemprop="position" [content]="i + 2" />
+    </li>
+  </ng-container>
+  <li
+    class="bread"
+    itemprop="itemListElement"
+    itemscope
+    itemtype="https://schema.org/ListItem"
+    *ngIf="current"
+  >
+    <span itemprop="name" class="bread__link is-active">{{ current }}</span>
+    <meta itemprop="position" [content]="parents?.length ? parents?.length + 2 : 2" />
+  </li>
+</ul>

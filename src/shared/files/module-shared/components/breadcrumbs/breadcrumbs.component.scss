@@ -1,0 +1,49 @@
+@import '../../../../assets/styles/setup';
+
+.breads {
+  font-family: $font-gotham;
+  margin-left: -8px;
+  padding: 28px 0;
+  display: flex;
+  flex-wrap: wrap;
+
+  @include media-min(1920px) {
+    padding: 1.25vw 0;
+  }
+
+  .icon {
+    transform: translateY(1px);
+  }
+
+  .slash {
+    position: absolute;
+    top: 0;
+    right: -7px;
+    display: block;
+    transform: translateY(1px);
+  }
+
+  .bread {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+    color: $c-gray-dark-2;
+
+    &:not(.current) {
+      margin-right: 8px;
+    }
+
+    & > a,
+    & > span {
+      padding: 0 8px;
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+    }
+  }
+}

@@ -5,7 +5,7 @@ import {
 import { normalize, strings } from '@angular-devkit/core';
 import { MenuOptions } from './schema';
 import { findModuleFromOptions } from '@schematics/angular/utility/find-module';
-import { addLazyLoadingRouteToNgModule } from '../utils/ng-module-utils';
+import { addLazyLoadingRouteToNgModule } from '../../utils/ng-module-utils';
 
 
 export default function (_options: MenuOptions): Rule {

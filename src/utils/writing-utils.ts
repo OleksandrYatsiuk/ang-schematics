@@ -10,3 +10,12 @@ export function writeToRight(recorder: UpdateRecorder, data: Change[]): UpdateRe
     return recorder;
 }
 
+export function writeToLeft(recorder: UpdateRecorder, data: Change[]): UpdateRecorder {
+    for (const change of data) {
+        if (change instanceof InsertChange) {
+            recorder.insertLeft(change.pos, change.toAdd);
+        }
+    }
+    return recorder;
+}
+

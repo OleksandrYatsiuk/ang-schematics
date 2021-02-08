@@ -3,7 +3,7 @@ import { JSONFile } from "@schematics/angular/utility/json-file";
 
 const PKG_JSON_PATH = '/tsconfig.json';
 
-interface DeclareModulePaths {
+export interface DeclareModulePaths {
     key: string;
     path: string;
     overwrite?: boolean;

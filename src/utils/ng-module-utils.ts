@@ -33,9 +33,8 @@ export function addLazyLoadingRouteToNgModule(options: ModuleOptions): Rule {
                 context.relativePath,
                 options.route);
 
-            exportRecorder = writeToRight(exportRecorder, fileChanges.concat(fileChanges));
+            exportRecorder = writeToRight(exportRecorder, fileChanges);
         } else {
-
             const fileChanges = addImportToModule(context.source, modulePath, 'RouterModule.forRoot(routes)', '@angular/router');
             const routesChanges = addRouteToModule(context.source, modulePath, context.classifiedName, context.relativePath, options.route);
             exportRecorder = writeToRight(exportRecorder, fileChanges.concat(routesChanges));

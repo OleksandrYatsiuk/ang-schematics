@@ -35,14 +35,14 @@ The ng g command will generate element in Angular project
 
 ## ⚒ Develop
 
-Use NPM command for re-run automatically whenever a change is made.
+Use NPM command for re-run automatically whenever a change is made:
 
 ```
 npm run build:watch
 ```
 
-[8:57:54] File change detected. Starting incremental compilation...
-[8:57:54] Found 0 errors. Watching for file changes.
+> [8:57:54] File change detected. Starting incremental compilation... <br>
+> [8:57:54] Found 0 errors. Watching for file changes.
 
 ### Importantly 
 

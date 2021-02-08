@@ -5,9 +5,17 @@ import { AddToModuleContext } from './add-to-module-context';
 import { classify, dasherize } from '@angular-devkit/core/src/utils/strings';
 import { buildRelativePath } from "@schematics/angular/utility/find-module";
 import { addImportToModule, getRouterModuleDeclaration } from "@schematics/angular/utility/ast-utils";
-import { InsertChange } from '@schematics/angular/utility/change';
-import { ModuleOptions } from './module-options';
 import { addRouteToModule } from './routes-utils';
+import { writeToRight } from './writing-utils';
+
+
+export interface ModuleOptions {
+    module: string;
+    name: string;
+    sourceDir?: string;
+    path?: string;
+    route: string;
+  }
 
 
 export function addLazyLoadingRouteToNgModule(options: ModuleOptions): Rule {
@@ -15,7 +23,7 @@ export function addLazyLoadingRouteToNgModule(options: ModuleOptions): Rule {
         const context = createModuleContext(tree, options);
         const modulePath = options.module || '';
 
-        const exportRecorder = tree.beginUpdate(modulePath);
+        let exportRecorder = tree.beginUpdate(modulePath);
 
         if (getRouterModuleDeclaration(context.source)) {
 
@@ -25,22 +33,13 @@ export function addLazyLoadingRouteToNgModule(options: ModuleOptions): Rule {
                 context.relativePath,
                 options.route);
 
-            for (const change of fileChanges) {
-                if (change instanceof InsertChange) {
-                    exportRecorder.insertRight(change.pos, change.toAdd);
-                }
-            }
-
+            exportRecorder = writeToRight(exportRecorder, fileChanges.concat(fileChanges));
         } else {
 
             const fileChanges = addImportToModule(context.source, modulePath, 'RouterModule.forRoot(routes)', '@angular/router');
             const routesChanges = addRouteToModule(context.source, modulePath, context.classifiedName, context.relativePath, options.route);
+            exportRecorder = writeToRight(exportRecorder, fileChanges.concat(routesChanges));
 
-            for (const change of fileChanges.concat(routesChanges)) {
-                if (change instanceof InsertChange) {
-                    exportRecorder.insertRight(change.pos, change.toAdd);
-                }
-            }
         }
         tree.commitUpdate(exportRecorder);
 

@@ -10,6 +10,11 @@
     "ng-add": {
       "description": "Add library to Angular project dependencies and install it.",
       "factory": "./ng-add/index#ngAdd"
+    },
+    "guard": {
+      "description": "A blank schematic.",
+      "factory": "./guard/index#guard",
+      "schema": "./guard/schema.json"
     }
   }
 }

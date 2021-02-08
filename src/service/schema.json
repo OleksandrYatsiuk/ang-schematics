@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchemanticsForServices",
+  "title": "Service Schema",
+  "type": "object",
+  "properties": {
+    "folder": {
+      "type": "string",
+      "description": "Folder name for guards",
+      "default": "services",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
+    },
+    "services": {
+      "type": "array",
+      "description": "The guard for project",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      },
+      "x-prompt": {
+        "message": "Which service would you like to generate?",
+        "type": "list",
+        "multiselect": true,
+        "items": [
+          "lang",
+          "resources-data-services",
+          "shared-resources"
+        ]
+      }
+    },
+    "path": {
+      "type": "string",
+      "default": "app"
+    },
+    "sourceDir": {
+      "type": "string",
+      "default": "src"
+    }
+  }
+}

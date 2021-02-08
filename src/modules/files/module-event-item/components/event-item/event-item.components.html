@@ -1,0 +1,14 @@
+<section class="particular-event">
+  <div class="particulat-event__wrapper">
+      <div class="container">
+        <app-breadcrumbs [current]="item?.title" [parents]="[parent]"></app-breadcrumbs>
+        <h1 class="particular-event__title">{{ item?.title.toLocaleUpperCase() }}</h1>
+        <div class="particular-event__img-wrap">
+          <img [src]="item?.imageUrl" [alt]="item?.title" />
+        </div>
+        <article class="texts" [innerHTML]="item?.content"></article>
+      </div>
+  </div>
+  <app-block-events [news]="newsList" [title]="getRes('similarNewsTitle')" ></app-block-events>
+</section>
+

@@ -1,0 +1,49 @@
+<section class="news">
+  <div class="news__wrapper">
+    <div class="container">
+      <app-breadcrumbs [current]="getSiteGroup('pageTitle')"></app-breadcrumbs>
+
+      <div class="news__text-box">
+        <h1 class="news__title title">{{ getSiteGroup("pageTitle") }}</h1>
+
+        <ul class="news__tabs">
+          <li [ngClass]="{ 'selected-class': route == eventRoutes.ALL_ARTICLES }">
+            <a
+              [routerLink]="['/' + eventRoutes.ALL_ARTICLES | langPrefix]"
+              >{{ getRes("allArticles") }}</a>
+          </li>
+        
+          <li [ngClass]="{ 'selected-class': route.includes(eventRoutes.PROMOTIONS) }">
+            <a
+            [routerLink]="['/' + eventRoutes.PROMOTIONS | langPrefix]"
+            >{{ getRes("promotions") }}</a>
+          </li>
+        
+          <li  [ngClass]="{ 'selected-class': route.includes(eventRoutes.NEWS) }">
+            <a
+            [routerLink]="['/' + eventRoutes.NEWS | langPrefix]"
+            >{{ getRes("news") }}</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="news-block">
+        <ng-container *ngFor="let item of newsList; trackBy: trackItem">
+          <app-card-event [item]="item"></app-card-event>
+        </ng-container>
+      </div>
+
+      <div class="news-block__nav">
+        <app-paginator
+          [rows]="rows"
+          [totalRecords]="totalRecords"
+          [totalPages]="totalPages"
+          (pageChange)="onPageChange($event)"
+        ></app-paginator>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+

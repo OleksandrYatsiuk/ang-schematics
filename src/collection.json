@@ -12,9 +12,19 @@
       "factory": "./ng-add/index#ngAdd"
     },
     "guard": {
-      "description": "A blank schematic.",
+      "description": "Add guards to Angular project",
       "factory": "./guard/index#guard",
       "schema": "./guard/schema.json"
+    },
+    "service": {
+      "description": "Add services to Angular project",
+      "factory": "./service/index#service",
+      "schema": "./service/schema.json"
+    },
+    "modules": {
+      "description": "Add list of modules to Angular project",
+      "factory": "./modules/index#modules",
+      "schema": "./modules/schema.json"
     }
   }
 }

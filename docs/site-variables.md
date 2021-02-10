@@ -1,5 +1,5 @@
 ## 👨🏻‍🏫 How to Use
 
 ```
-ng g core-schematic:shared
+ng g core-schematic:site-variables
 ```

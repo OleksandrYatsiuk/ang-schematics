@@ -32,6 +32,18 @@ ng g core-schematic:m ModuleName
 
 The ng g command will generate element in Angular project
 
+### List of available commands
+
+Command | Link|Description
+------- | ----|-------------
+add           |[More details](http://github.com) | Install package to project
+site-variables|[More details](http://github.com) | Create Site variables in app.module.ts
+shared        |[More details](http://github.com) | Generate Shared Module and some components
+directives    |[More details](http://github.com) | Generate directive from available list
+services      |[More details](http://github.com) | Generate services from available list
+modules       |[More details](http://github.com) | Generate modules from available list
+guards        |[More details](http://github.com) | Generate guards from available list
+
 
 
 ## ⚒ Develop

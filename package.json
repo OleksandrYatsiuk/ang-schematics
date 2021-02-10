@@ -22,7 +22,10 @@
   "schematics": "./src/collection.json",
   "dependencies": {
     "@angular-devkit/schematics": "^11.1.4",
+    "@angular/core": "^11.1.2",
     "@schematics/angular": "^11.1.4",
+    "@types/stringify-object": "^3.3.0",
+    "stringify-object": "^3.3.0",
     "typescript": "~4.1.2"
   },
   "devDependencies": {

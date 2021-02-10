@@ -1,0 +1,40 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "id": "SchemanticsForDirectives",
+    "title": "Directives Schema",
+    "type": "object",
+    "properties": {
+      "folder": {
+        "type": "string",
+        "description": "Folder name for directives",
+        "default": "directives",
+        "$default": {
+          "$source": "argv",
+          "index": 0
+        }
+      },
+      "directives": {
+        "type": "array",
+        "description": "The directive for project",
+        "uniqueItems": true,
+        "items": {
+          "type": "string"
+        },
+        "x-prompt": {
+          "message": "Which guards would you like to generate?",
+          "type": "list",
+          "multiselect": true,
+          "items": ["device", "parallax"]
+        }
+      },
+      "path": {
+        "type": "string",
+        "default": "app"
+      },
+      "sourceDir": {
+        "type": "string",
+        "default": "src"
+      }
+    }
+  }
+  

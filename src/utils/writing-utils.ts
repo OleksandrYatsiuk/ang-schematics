@@ -1,21 +1,33 @@
-import { UpdateRecorder } from "@angular-devkit/schematics";
+import { Tree } from "@angular-devkit/schematics";
 import { Change, InsertChange } from "@schematics/angular/utility/change";
 
-export function writeToRight(recorder: UpdateRecorder, data: Change[]): UpdateRecorder {
+export function writeToRight(tree: Tree, data: Change[], path: string): void {
+    const recorder = tree.beginUpdate(path);
+
     for (const change of data) {
         if (change instanceof InsertChange) {
             recorder.insertRight(change.pos, change.toAdd);
         }
     }
-    return recorder;
+    tree.commitUpdate(recorder);
 }
 
-export function writeToLeft(recorder: UpdateRecorder, data: Change[]): UpdateRecorder {
+export function writeToLeft(tree: Tree, data: Change[], path: string): void {
+    const recorder = tree.beginUpdate(path);
+
     for (const change of data) {
         if (change instanceof InsertChange) {
             recorder.insertLeft(change.pos, change.toAdd);
         }
     }
-    return recorder;
+    tree.commitUpdate(recorder);
 }
 
+
+export function clear(tree: Tree, start: number, width: number, path: string, commit = false): void {
+    const recorder = tree.beginUpdate(path);
+    recorder.remove(start, width)
+    if (commit) {
+        tree.commitUpdate(recorder);
+    }
+}

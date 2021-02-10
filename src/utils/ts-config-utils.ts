@@ -8,8 +8,17 @@ export interface DeclareModulePaths {
     path: string;
     overwrite?: boolean;
 }
-
-
+/**
+ * 
+ * @param host 
+ * @param options 
+ * 
+ * paths:{
+ *  "{{key}}":[
+ *     "{{path}}"
+ *   ]
+ * }
+ */
 export function addPathToTsConfigJson(host: Tree, options: DeclareModulePaths): void {
 
     const file = new JSONFile(host, PKG_JSON_PATH)

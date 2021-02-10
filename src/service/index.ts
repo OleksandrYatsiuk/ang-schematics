@@ -1,7 +1,7 @@
 import { apply, branchAndMerge, chain, filter, mergeWith, move, Rule, SchematicContext, template, Tree, url } from '@angular-devkit/schematics';
 import { IServiceSchema } from './schema';
 import { normalize, strings } from '@angular-devkit/core';
-import { filterFilesByName } from '../../utils/filter-utils';
+import { filterFilesByName } from '../utils/filter-utils';
 
 
 export function service(_options: IServiceSchema): Rule {

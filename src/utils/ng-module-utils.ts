@@ -15,15 +15,13 @@ export interface ModuleOptions {
     sourceDir?: string;
     path?: string;
     route: string;
-  }
+}
 
 
 export function addLazyLoadingRouteToNgModule(options: ModuleOptions): Rule {
     return (tree: Tree) => {
         const context = createModuleContext(tree, options);
         const modulePath = options.module || '';
-
-        let exportRecorder = tree.beginUpdate(modulePath);
 
         if (getRouterModuleDeclaration(context.source)) {
 
@@ -33,15 +31,13 @@ export function addLazyLoadingRouteToNgModule(options: ModuleOptions): Rule {
                 context.relativePath,
                 options.route);
 
-            exportRecorder = writeToRight(exportRecorder, fileChanges);
+            writeToRight(tree, fileChanges, modulePath);
         } else {
             const fileChanges = addImportToModule(context.source, modulePath, 'RouterModule.forRoot(routes)', '@angular/router');
             const routesChanges = addRouteToModule(context.source, modulePath, context.classifiedName, context.relativePath, options.route);
-            exportRecorder = writeToRight(exportRecorder, fileChanges.concat(routesChanges));
+            writeToRight(tree, fileChanges.concat(routesChanges), modulePath);
 
         }
-        tree.commitUpdate(exportRecorder);
-
         return tree;
     }
 }

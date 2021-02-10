@@ -30,6 +30,19 @@
       "description": "Add shared module to Angular Project",
       "factory": "./shared/index#shared",
       "schema": "./shared/schema.json"
+    },
+    "directives": {
+      "description": "A blank schematic.",
+      "factory": "./directives/index#directives",
+      "schema": "./directives/schema.json"
+
+    },
+    "site-variables": {
+      "description": "A blank schematic.",
+      "factory": "./site-variables/index#siteVariables",
+      "schema": "./site-variables/schema.json",
+      "aliases": ["var"]
+
     }
   }
 }

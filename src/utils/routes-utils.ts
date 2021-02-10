@@ -1,6 +1,7 @@
 import { Change, InsertChange } from '@schematics/angular/utility/change';
 import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 import { getSourceNodes, insertImport } from '@schematics/angular/utility/ast-utils';
+import { getLastImportDeclarations } from './import-utils';
 
 /**
  * 
@@ -23,12 +24,6 @@ function asyncRouteTemplate(route: string, path: string, moduleName: string): st
 }`;
 }
 
-export function getAllImportDeclarations(sourceFile: ts.SourceFile): ts.Node[] {
-    return sourceFile.statements.filter(
-        statement => statement.kind === ts.SyntaxKind.ImportDeclaration
-    );
-}
-
 /**
  * @param source typescript file context
  * @param identifier variable name of declaration
@@ -36,14 +31,18 @@ export function getAllImportDeclarations(sourceFile: ts.SourceFile): ts.Node[] {
  * identifier is  "variable"
  * @returns node instance
  */
-export function getVariableDeclaration(source: ts.SourceFile, identifier: string): ts.Node[] {
+export function getVariableDeclaration(source: ts.SourceFile, identifier: string, isArray?: boolean): ts.Node[] {
 
     const nodes = getSourceNodes(source).map((n: ts.Node) => n)
         .filter((n: ts.Node) => n.kind === ts.SyntaxKind.VariableDeclaration)
         .filter((n: ts.Node) => n.getChildren().findIndex(c => c.kind === ts.SyntaxKind.Identifier && c.getText() == identifier) !== -1)
-        .map((n: ts.Node) => n.getChildren().filter(c => (c.kind === ts.SyntaxKind.ArrayLiteralExpression)));
-
-    return nodes[nodes.length - 1];
+    if (isArray) {
+        const node = nodes.map((n: ts.Node) => n.getChildren().filter(c => (c.kind == ts.SyntaxKind.ArrayLiteralExpression)));
+        return node[node.length - 1];
+    } else {
+        const node = nodes.map((n: ts.Node) => n.getChildren().filter(c => (c.kind == ts.SyntaxKind.ObjectLiteralExpression)));
+        return node[node.length - 1];
+    }
 }
 
 export function addRouteToModule(source: ts.SourceFile,
@@ -57,7 +56,7 @@ export function addSymbolToRoutesMetadata(source: ts.SourceFile,
     metadataField: string,
     moduleName: string,
     importPath: string, route: string): Change[] {
-    const nodes = getVariableDeclaration(source, metadataField);
+    const nodes = getVariableDeclaration(source, metadataField, true);
 
     const asyncRoute = asyncRouteTemplate(route, importPath, moduleName);
 
@@ -76,8 +75,7 @@ export function addSymbolToRoutesMetadata(source: ts.SourceFile,
 }
 
 export function createRoutesVariable(source: ts.SourceFile, ngModulePath: string, route: string): Change[] {
-    const importDeclarations = getAllImportDeclarations(source);
-    const lastImport = importDeclarations[importDeclarations.length - 1];
+    const lastImport = getLastImportDeclarations(source);
 
     route = `\n const routes: Route[]= [${route}];`;
 

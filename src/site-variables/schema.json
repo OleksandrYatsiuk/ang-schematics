@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchemanticsForSiteVariables",
+  "title": "Site Variables Schema",
+  "type": "object",
+  "properties": {
+    "variables": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "default": 1,
+          "x-prompt": "Enter Site ID (default: 1)"
+        },
+        "allowedLang": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": ["uk", "ru"],
+          "x-prompt": {
+            "message": "Which language would you like to select?",
+            "type": "list",
+            "multiselect": true,
+            "items": [
+              { "label": "Ukrainian", "value": "uk" },
+              { "label": "Russian", "value": "ru" },
+              { "label": "English", "value": "en" }
+            ]
+          }
+        },
+        "defLang": {
+          "type": "string",
+          "x-prompt": {
+            "message": "Which language would you like to select as default?",
+            "type": "list",
+            "multiselect": false,
+            "items": [
+              { "label": "Ukrainian", "value": "uk" },
+              { "label": "Russian", "value": "ru" },
+              { "label": "English", "value": "en" }
+            ]
+          }
+        },
+        "androidAppId": {
+          "type": "string",
+          "default": "",
+          "x-prompt": "Enter Android App ID (default: null)"
+        },
+        "mapCenter": {
+          "type": "object",
+          "properties": {
+            "lat": {
+              "type": "string",
+              "default": 50.43,
+              "x-prompt": "Enter map center latitude:"
+            },
+            "lng": {
+              "type": "string",
+              "default": 30.51,
+              "x-prompt": "Enter map center longitude:"
+            }
+          }
+        },
+        "windowSize": {
+          "type": "object",
+          "properties": {
+            "mobile": {
+              "type": "string",
+              "default": 768,
+              "x-prompt": "Enter window size options for mobile screen:"
+            },
+            "laptop": {
+              "type": "string",
+              "default": 1280,
+              "x-prompt": "Enter window size options for laptop screen:"
+            }
+          }
+        }
+      }
+    },
+    "module": {
+      "type": "string",
+      "default": "app.module.ts",
+      "x-prompt": "Enter module to insert variables"
+    },
+    "insertInterface": {
+      "type": "boolean",
+      "default": true,
+      "x-prompt": {
+        "message": "Do you want to generate Site Variables interface?",
+        "type": "confirmation"
+      }
+    }
+  }
+}

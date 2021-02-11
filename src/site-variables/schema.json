@@ -86,7 +86,7 @@
     },
     "insertInterface": {
       "type": "boolean",
-      "default": false,
+      "default": true,
       "x-prompt": {
         "message": "Do you want to generate Site Variables interface?",
         "type": "confirmation"

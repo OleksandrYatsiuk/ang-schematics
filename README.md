@@ -36,7 +36,7 @@ The ng g command will generate element in Angular project
 
 Command       |  Link                            |Description
 ------------- | ---------------------------------|-------------
-add           |[More details](http://github.com) | Install package to project
+add           |-                                 | Install package to project
 site-variables|[More details](docs/shared.md)    | Create Site variables in app.module.ts
 shared        |[More details](docs/shared.md)    | Generate Shared Module and some components
 directives    |[More details](http://github.com) | Generate directive from available list

@@ -1,7 +1,9 @@
 ## 👨🏻‍🏫 How to Use
 
 ```
-ng g core-schematic:site-variables
+ng g core-schematic:site-variables 
+or 
+ng g core-schematic:var
 ```
 
 

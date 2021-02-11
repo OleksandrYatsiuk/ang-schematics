@@ -3,7 +3,7 @@
  * @param path path to schema files
  * @param selected array of selected files to generate
  * @param folder check only in folder, other true
- * @returns boolean; available current path to generate?
+ * @returns boolean; is available current path to generate
  */
 
 export function filterFilesByName(path: string, selected: string[], folder = ''): boolean {

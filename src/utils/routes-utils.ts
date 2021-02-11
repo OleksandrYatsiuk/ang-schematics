@@ -1,7 +1,8 @@
 import { Change, InsertChange } from '@schematics/angular/utility/change';
 import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
-import { getSourceNodes, insertImport } from '@schematics/angular/utility/ast-utils';
+import { insertImport } from '@schematics/angular/utility/ast-utils';
 import { getLastImportDeclarations } from './import-utils';
+import { getVariableDeclaration } from './variables-module-utils';
 
 /**
  * 
@@ -22,27 +23,6 @@ function asyncRouteTemplate(route: string, path: string, moduleName: string): st
     path: '${route}',
     loadChildren: async () => ((await import('${path}')).${moduleName})
 }`;
-}
-
-/**
- * @param source typescript file context
- * @param identifier variable name of declaration
- * const variable = [];  
- * identifier is  "variable"
- * @returns node instance
- */
-export function getVariableDeclaration(source: ts.SourceFile, identifier: string, isArray?: boolean): ts.Node[] {
-
-    const nodes = getSourceNodes(source).map((n: ts.Node) => n)
-        .filter((n: ts.Node) => n.kind === ts.SyntaxKind.VariableDeclaration)
-        .filter((n: ts.Node) => n.getChildren().findIndex(c => c.kind === ts.SyntaxKind.Identifier && c.getText() == identifier) !== -1)
-    if (isArray) {
-        const node = nodes.map((n: ts.Node) => n.getChildren().filter(c => (c.kind == ts.SyntaxKind.ArrayLiteralExpression)));
-        return node[node.length - 1];
-    } else {
-        const node = nodes.map((n: ts.Node) => n.getChildren().filter(c => (c.kind == ts.SyntaxKind.ObjectLiteralExpression)));
-        return node[node.length - 1];
-    }
 }
 
 export function addRouteToModule(source: ts.SourceFile,

@@ -4,7 +4,11 @@ import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeSc
 import { AddToModuleContext } from './add-to-module-context';
 import { classify, dasherize } from '@angular-devkit/core/src/utils/strings';
 import { buildRelativePath } from "@schematics/angular/utility/find-module";
-import { addImportToModule, getRouterModuleDeclaration } from "@schematics/angular/utility/ast-utils";
+import {
+    addImportToModule,
+    addSymbolToNgModuleMetadata,
+    getRouterModuleDeclaration
+} from "@schematics/angular/utility/ast-utils";
 import { addRouteToModule } from './routes-utils';
 import { writeToRight } from './writing-utils';
 
@@ -68,6 +72,10 @@ function createModuleContext(host: Tree, options: ModuleOptions): AddToModuleCon
     result.relativePath = buildRelativePath(options.module, componentPath);
     result.classifiedName = classify(`${options.name}Module`);
     return result;
+}
+
+export function addProviderToModule(source: ts.SourceFile, path: string, name: string, importPath?: string | null): any {
+    return addSymbolToNgModuleMetadata(source, path, 'providers', name, importPath)
 }
 
 

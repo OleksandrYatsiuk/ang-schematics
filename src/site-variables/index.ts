@@ -1,14 +1,14 @@
 import { apply, branchAndMerge, chain, mergeWith, move, noop, Rule, SchematicContext, SchematicsException, template, Tree, url } from '@angular-devkit/schematics';
 import { ISiteVariablesSchema, ModelSiteVariables } from './schema';
 import { getWorkspace } from '@schematics/angular/utility/workspace';
-import { addVariableDeclaration, IVariableDeclaration, parseTsFileToSource } from '../utils/variables-module-utils';
-import { getVariableDeclaration } from '../utils/routes-utils';
-import { clear, writeToLeft, writeToRight } from '../utils/writing-utils';
+import { addVariableDeclaration, getVariableDeclaration, IVariableDeclaration } from '../utils/variables-module-utils';
+import { writeToRight } from '../utils/writing-utils';
 import * as stringifyObject from "stringify-object";
 import { getLastImportDeclarations } from '../utils/import-utils';
 import { normalize, strings } from '@angular-devkit/core';
 import { getPathFromTsConfigJson } from '../utils/ts-config-utils';
-import { InsertChange } from '@schematics/angular/utility/change';
+import { parseTsFileToSource } from '../utils/parse-utils';
+import { addProviderToModule } from '../utils/ng-module-utils';
 
 
 export function siteVariables(_options: ISiteVariablesSchema): Rule {
@@ -52,30 +52,32 @@ function generateSiteVariable(_options: ISiteVariablesSchema): Rule {
     const source = parseTsFileToSource(tree, _options.path, _options.module);
     _options.variables = new ModelSiteVariables(_options.variables);
     const fullPath = `${_options.path}/${_options.module}`;
+    const variableName = 'SITE_VARIABLES';
 
-    const nodes = getVariableDeclaration(source, 'SITE_VARIABLES');
-    if (nodes?.length === 1) {
-      const pos = nodes[0].getFullStart();
-      clear(tree, pos, nodes[0].getFullWidth(), fullPath, true);
-      writeToLeft(tree, [new InsertChange(fullPath, pos, ` ${stringifyObject(_options.variables)}`)], fullPath);
-    } else {
-      const lastImport = getLastImportDeclarations(source)
-      const variable: IVariableDeclaration = {
-        name: 'SITE_VARIABLES',
-        content: `\n ${stringifyObject(_options.variables)}`,
-        type: 'const',
-        isExport: true,
-        model: 'ISiteVariables',
-        modelPath: './models/site-variables.model',
-      }
+    const nodes = getVariableDeclaration(source, variableName);
 
-      if (getPathFromTsConfigJson(tree, '@models/*')) {
-        variable.modelPath = "@models/site-variables.model";
-      }
-      const changes = addVariableDeclaration(fullPath, lastImport.getEnd() + 1, variable, source);
-
-      writeToRight(tree, changes, fullPath);
+    if (nodes?.length > 0) {
+      throw new SchematicsException(`Variable "${variableName}" is already exist in file!`);
     }
+
+    const lastImport = getLastImportDeclarations(source)
+    const variable: IVariableDeclaration = {
+      name: variableName,
+      type: 'const',
+      isExport: true,
+      content: `${stringifyObject(_options.variables)}`,
+      model: 'ISiteVariables',
+      modelPath: './models/site-variables.model',
+    }
+
+    if (getPathFromTsConfigJson(tree, '@models/*')) {
+      variable.modelPath = "@models/site-variables.model";
+    }
+
+    const variableChanges = addVariableDeclaration(fullPath, lastImport.getEnd() + 1, variable, source);
+    const providerChanges = addProviderToModule(source, fullPath, `{ provide: 'APP_CONFIG', useValue: ${variableName} }`);
+
+    writeToRight(tree, variableChanges.concat(providerChanges), fullPath);
 
     return tree;
   }

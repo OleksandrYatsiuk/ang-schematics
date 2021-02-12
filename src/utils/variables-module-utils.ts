@@ -43,7 +43,7 @@ export function createVariable({ isExport = false, type, name, content, model }:
 
 export function createFunction({ isExport = false, name, content, params, returns }: IFunctionDeclaration): string {
     const args = params?.map(arg => [`${arg.model}: ${arg?.importPath ? arg?.importPath : 'any'}`]);
-    return `\n${isExport ? 'export' : ''} function ${name} (${args?.toString() || ''}): ${returns ? returns.model : 'void'} {\n${content}\n}`;
+    return `\n${isExport ? 'export' : ''} function ${name}(${args?.toString() || ''}): ${returns ? returns.model : 'void'} {\n${content}\n}\n`;
 }
 
 /**

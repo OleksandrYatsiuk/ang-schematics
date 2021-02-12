@@ -46,6 +46,12 @@
       "description": "Add main module component",
       "factory": "./main/index#main",
       "schema": "./main/schema.json"
+    },
+    "spm-core-integration": {
+      "description": "Add spm core to project and app.module.ts",
+      "factory": "./spm-core-integration/index#spmCoreIntegration",
+      "schema": "./spm-core-integration/schema.json",
+      "aliases": ["spm"]
     }
   }
 }

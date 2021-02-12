@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "id": "SchemanticsForSiteVariables",
+    "title": "Site Variables Schema",
+    "type": "object",
+    "properties": {
+      "module": {
+        "type": "string",
+        "default": "app.module.ts",
+        "x-prompt": "Enter module to insert variables"
+      }
+    }
+  }
+  

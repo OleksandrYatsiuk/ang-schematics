@@ -32,17 +32,20 @@
       "schema": "./shared/schema.json"
     },
     "directives": {
-      "description": "A blank schematic.",
+      "description": "Add directive to Angular Project",
       "factory": "./directives/index#directives",
       "schema": "./directives/schema.json"
-
     },
     "site-variables": {
-      "description": "A blank schematic.",
+      "description": "Add site variables to main module.",
       "factory": "./site-variables/index#siteVariables",
       "schema": "./site-variables/schema.json",
       "aliases": ["var"]
-
+    },
+    "main": {
+      "description": "Add main module component",
+      "factory": "./main/index#main",
+      "schema": "./main/schema.json"
     }
   }
 }

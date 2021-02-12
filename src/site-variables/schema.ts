@@ -1,6 +1,6 @@
-export interface ISiteVariablesSchema {
-    path: string;
-    project?: any;
+import { ISchema } from "../base.model";
+
+export interface ISiteVariablesSchema extends ISchema {
     declare: boolean;
     module: string;
     insertInterface: boolean;

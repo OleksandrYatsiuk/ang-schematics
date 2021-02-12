@@ -21,7 +21,7 @@
           "type": "string"
         },
         "x-prompt": {
-          "message": "Which guards would you like to generate?",
+          "message": "Which directives would you like to generate?",
           "type": "list",
           "multiselect": true,
           "items": ["device", "parallax"]

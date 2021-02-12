@@ -2,6 +2,7 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "baseUrl": "tsconfig",
+    "outDir": "src/",
     "lib": [
       "es2018",
       "dom"

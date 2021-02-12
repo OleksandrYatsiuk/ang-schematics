@@ -1,6 +1,5 @@
 import { apply, branchAndMerge, chain, mergeWith, move, noop, Rule, SchematicContext, SchematicsException, template, Tree, url } from '@angular-devkit/schematics';
 import { ISiteVariablesSchema, ModelSiteVariables } from './schema';
-import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { addVariableDeclaration, getVariableDeclaration, IVariableDeclaration } from '../utils/variables-module-utils';
 import { writeToRight } from '../utils/writing-utils';
 import * as stringifyObject from "stringify-object";
@@ -9,31 +8,20 @@ import { normalize, strings } from '@angular-devkit/core';
 import { getPathFromTsConfigJson } from '../utils/ts-config-utils';
 import { parseTsFileToSource } from '../utils/parse-utils';
 import { addProviderToModule } from '../utils/ng-module-utils';
+import { createHost } from '../utils/workspace-utils';
 
 
 export function siteVariables(_options: ISiteVariablesSchema): Rule {
   return async (tree: Tree, _context: SchematicContext) => {
-    const workspace = await getWorkspace(tree, 'angular.json');
 
-    if (!_options.project) {
-      _options.project = workspace.extensions.defaultProject;
-    }
-
-    const project = workspace.projects.get(_options.project);
-    if (!project) {
-      throw new SchematicsException(`Invalid project name: ${_options.project}`);
-    }
-    const projectType = project.extensions.projectType === 'application' ? 'app' : 'lib';
-    if (_options.path === undefined) {
-      _options.path = `${project.sourceRoot}/${projectType}`;
-    }
+    _options = await createHost(tree, _options);
 
     const templateSource = apply(url('./files'), [
       template({
         ...strings,
         ..._options
       }),
-      move(normalize(`${_options.path}/models`))
+      move(normalize(`${_options.srcDir}/models`))
     ]);
 
     return chain([
@@ -49,9 +37,9 @@ export function siteVariables(_options: ISiteVariablesSchema): Rule {
 
 function generateSiteVariable(_options: ISiteVariablesSchema): Rule {
   return (tree: Tree) => {
-    const source = parseTsFileToSource(tree, _options.path, _options.module);
+    const source = parseTsFileToSource(tree, _options.srcDir, _options.module);
     _options.variables = new ModelSiteVariables(_options.variables);
-    const fullPath = `${_options.path}/${_options.module}`;
+    const fullPath = `${_options.srcDir}/${_options.module}`;
     const variableName = 'SITE_VARIABLES';
 
     const nodes = getVariableDeclaration(source, variableName);

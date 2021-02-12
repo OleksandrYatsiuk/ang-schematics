@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchemanticsForServices",
+  "title": "Service Schema",
+  "type": "object",
+  "properties": {
+    "components": {
+      "type": "array",
+      "description": "The guard for project",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      },
+      "x-prompt": {
+        "message": "Which components would you like to generate?",
+        "type": "list",
+        "multiselect": true,
+        "items": ["card-complex", "card-event", "card-planing"]
+      }
+    },
+    "path": {
+      "type": "string",
+      "default": "app"
+    },
+    "sourceDir": {
+      "type": "string",
+      "default": "src"
+    }
+  }
+}

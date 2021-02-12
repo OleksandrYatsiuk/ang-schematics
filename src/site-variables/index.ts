@@ -44,7 +44,7 @@ function generateSiteVariable(_options: ISiteVariablesSchema): Rule {
 
     const nodes = getVariableDeclaration(source, variableName);
 
-    if (nodes?.length > 0) {
+    if (nodes) {
       throw new SchematicsException(`Variable "${variableName}" is already exist in file!`);
     }
 

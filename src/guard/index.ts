@@ -8,7 +8,6 @@ export function guard(_options: IGuardSchema): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     _options.path = _options.path ? normalize(_options.path) : _options.path;
 
-console.log(_options);
     const templateSource = apply(url('./files'), [
       filter(path => filterFilesByName(path, _options.guards)),
       template({

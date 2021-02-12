@@ -18,6 +18,10 @@
         "items": ["card-complex", "card-event", "card-planing"]
       }
     },
+    "routingModule": {
+      "type": "string",
+      "default": "app.module.ts"
+    },
     "path": {
       "type": "string",
       "default": "app"

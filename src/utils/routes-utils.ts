@@ -2,7 +2,8 @@ import { Change, InsertChange } from '@schematics/angular/utility/change';
 import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
 import { insertImport } from '@schematics/angular/utility/ast-utils';
 import { getLastImportDeclarations } from './import-utils';
-import { getVariableDeclaration } from './variables-module-utils';
+import { addVariableDeclaration, getVariableDeclaration, IVariableDeclaration } from './variables-module-utils';
+import { SchematicsException } from '@angular-devkit/schematics';
 
 /**
  * 
@@ -36,15 +37,16 @@ export function addSymbolToRoutesMetadata(source: ts.SourceFile,
     metadataField: string,
     moduleName: string,
     importPath: string, route: string): Change[] {
-    const nodes = getVariableDeclaration(source, metadataField, true);
+    const nodes = getVariableDeclaration(source, metadataField);
+
 
     const asyncRoute = asyncRouteTemplate(route, importPath, moduleName);
 
-    if (nodes?.length === 1) {
-        if (nodes[0].forEachChild(node => node.getText().includes(route))) {
+    if (nodes) {
+        if (nodes.forEachChild(node => node.getText().includes(route))) {
             throw new Error(`Route "${route}" is already exist!`);
         }
-        const navigation: ts.ArrayLiteralExpression = nodes[0] as ts.ArrayLiteralExpression;
+        const navigation: ts.ArrayLiteralExpression = nodes as ts.ArrayLiteralExpression;
         const pos = navigation.getStart() + 1;
 
         const toInsert = `${asyncRoute},`;
@@ -64,4 +66,71 @@ export function createRoutesVariable(source: ts.SourceFile, ngModulePath: string
         insertImport(source, ngModulePath, 'Route', '@angular/router')
     ];
 
+}
+
+
+export interface IRouteModule {
+    routeName: string;
+    classifyModuleName?: string;
+    modulePath?: string;
+    lazy: boolean,
+    otherContent: string;
+    importsList?: {
+        model: string;
+        path?: string;
+    }[]
+
+}
+
+
+export function insertRoute(path: string, source: ts.SourceFile, route: IRouteModule): Change[] {
+
+    const changes: Change[] = [];
+
+    let routeModel = `{\npath: '${route?.routeName}',\n${route?.otherContent} \n}`;
+
+    if (route?.lazy && !route?.classifyModuleName) {
+        throw new SchematicsException('"classifyModuleName" field is required for lazy loading!');
+    }
+    if (route?.lazy && !route?.modulePath) {
+        throw new SchematicsException('"modulePath" field is required for lazy loading!');
+    }
+    if (route?.lazy) {
+        routeModel = `{\npath: '${route?.routeName},\n${route?.otherContent}\n` +
+            `loadChildren: async () => ((await import('${route?.modulePath}')).${route?.classifyModuleName})}`;
+    }
+
+    route.importsList?.forEach(i => {
+        if (i?.path) {
+            changes.push(insertImport(source, path, i.model, i.path));
+        }
+    })
+
+
+    const node = getVariableDeclaration(source, 'routes');
+
+
+    if (node) {
+        const start = node.forEachChild(n => n.kind === ts.SyntaxKind.ArrayLiteralExpression ? n.getStart() : false);
+        if (start) {
+            changes.push(new InsertChange(path + '/' + source.fileName, start + 1, `\n${routeModel},`))
+        }
+    } else {
+
+
+        const router: IVariableDeclaration = {
+            type: 'const',
+            name: 'routes',
+            model: 'Route[]',
+            modelPath: '@angular/router',
+            content: `[\n ${routeModel}\n]`
+
+        }
+
+        const lastImport = getLastImportDeclarations(source)
+        changes.push(addVariableDeclaration(path + '/' + source.fileName, lastImport.getEnd(), router)[0])
+
+    }
+
+    return changes;
 }

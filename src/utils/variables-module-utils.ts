@@ -4,7 +4,7 @@ import { getSourceNodes, insertImport } from '@schematics/angular/utility/ast-ut
 import { Change, InsertChange } from '@schematics/angular/utility/change';
 
 
-export type VariableType = 'const' | 'let' | 'var' | 'function';
+export type VariableType = 'const' | 'let' | 'var';
 
 export interface IVariableDeclaration {
     name: string;
@@ -74,18 +74,11 @@ export function addVariableDeclaration(path: string, pos: number, options: IVari
  * identifier is  "variable"
  * @returns node instance
  */
-export function getVariableDeclaration(source: ts.SourceFile, identifier: string, isArray?: boolean): ts.Node[] {
-
+export function getVariableDeclaration(source: ts.SourceFile, identifier: string): ts.Node {
     const nodes = getSourceNodes(source).map((n: ts.Node) => n)
         .filter((n: ts.Node) => n.kind === ts.SyntaxKind.VariableDeclaration)
         .filter((n: ts.Node) => n.getChildren().findIndex(c => c.kind === ts.SyntaxKind.Identifier && c.getText() == identifier) !== -1)
-    if (isArray) {
-        const node = nodes.map((n: ts.Node) => n.getChildren().filter(c => (c.kind == ts.SyntaxKind.ArrayLiteralExpression)));
-        return node[node.length - 1];
-    } else {
-        const node = nodes.map((n: ts.Node) => n.getChildren().filter(c => (c.kind == ts.SyntaxKind.ObjectLiteralExpression)));
-        return node[node.length - 1];
-    }
+        return nodes[nodes.length - 1];
 }
 
 export function getFunctionDeclaration(source: ts.SourceFile, identifier: string): ts.Node | undefined {
@@ -95,8 +88,6 @@ export function getFunctionDeclaration(source: ts.SourceFile, identifier: string
         .filter((n: ts.Node) => n.getChildren().findIndex(c => c.kind === ts.SyntaxKind.Identifier && c.getText() == identifier) !== -1)
     return nodes[nodes.length - 1];
 }
-
-
 
 export function addFunctionDeclaration(path: string, pos: number, options: IFunctionDeclaration, source?: ts.SourceFile): Change[] {
     const changes: Change[] = [];
@@ -133,4 +124,6 @@ export function addFunctionDeclaration(path: string, pos: number, options: IFunc
     return changes;
 
 }
+
+
 

@@ -1,6 +1,6 @@
 {
   "name": "core-schematic",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Schematics for generation modules with routes",
   "scripts": {
     "build": "tsc -p tsconfig.json",

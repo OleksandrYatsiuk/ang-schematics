@@ -8,7 +8,7 @@ export function ngAdd(_options: any): Rule {
     const lib: NodeDependency = {
       name: json.name,
       version: `^${json.version}`,
-      type: NodeDependencyType.Default
+      type: NodeDependencyType.Dev
     }
     addPackageJsonDependency(tree, lib)
     _context.addTask(new NodePackageInstallTask());

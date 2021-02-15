@@ -32,20 +32,27 @@ The ng g command will generate element in Angular project
 
 ### List of available commands
 
-| Command        | Link                              | Description                                |
-| -------------- | --------------------------------- | ------------------------------------------ |
-| add            | -                                 | Install package to project                 |
-| site-variables | [More details](docs/shared.md)    | Create Site variables in app.module.ts     |
-| spm            | [More details](docs/spm.md)       | Implementation spm-core lib to project     |
-| main           | [More details](docs/main.md)      | Generate main module with components       |
-| shared         | [More details](docs/shared.md)    | Generate Shared Module and some components |
+| Command        | Link                             | Description                                |
+| -------------- | -------------------------------- | ------------------------------------------ |
+| add            | -                                | Install package to project                 |
+| site-variables | [More details](docs/shared.md)   | Create Site variables in app.module.ts     |
+| spm            | [More details](docs/spm.md)      | Implementation spm-core lib to project     |
+| main           | [More details](docs/main.md)     | Generate main module with components       |
+| shared         | [More details](docs/shared.md)   | Generate Shared Module and some components |
 | directives     | [More details](docs/elements.md) | Generate directive from available list     |
 | services       | [More details](docs/elements.md) | Generate services from available list      |
-| modules        | [More details](docs/modules.md) | Generate modules from available list       |
+| modules        | [More details](docs/modules.md)  | Generate modules from available list       |
 | guards         | [More details](docs/elements.md) | Generate guards from available list        |
-| module         | [More details](docs/shared.md)    | Generate empty module with standard params |
+| module         | [More details](docs/shared.md)   | Generate empty module with standard params |
 
 ## ⚒ Develop
+
+#### Useful materials
+
+[Angular blog](https://blog.angular.io/schematics-an-introduction-dc1dfbc2a2b2)
+[Angular API](https://angular.io/guide/schematics)
+[Schematics github -> utility](https://github.com/angular/angular-cli/tree/master/packages/schematics/angular/utility)
+[Habr](https://habr.com/ru/post/469509/)
 
 Install all dependencies:
 
@@ -74,6 +81,24 @@ It is correct working status for re-run automatically:
 #### Importantly
 
 When compilation contains some errors building will not be completed and all changes will not working. You must fix all of errors and continue developing
+
+## How to use
+
+Install schematics globally
+
+```
+npm install -g @angular-devkit/schematics-cli
+```
+
+Use schematic to check results of code
+
+```
+schematics .:schematics-name (e.g ng-add)
+```
+
+#### Advice
+
+Create app folder (src/app) with module and add angular.json file in project before and start commands.
 
 ## How to install
 

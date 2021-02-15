@@ -13,7 +13,7 @@
         "index": 0
       }
     },
-    "services": {
+    "elements": {
       "type": "array",
       "description": "The guard for project",
       "uniqueItems": true,
@@ -30,14 +30,6 @@
           "shared-resources"
         ]
       }
-    },
-    "path": {
-      "type": "string",
-      "default": "app"
-    },
-    "sourceDir": {
-      "type": "string",
-      "default": "src"
     }
   }
 }

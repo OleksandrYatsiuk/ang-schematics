@@ -7,7 +7,12 @@
     "routingModule": {
       "type": "string",
       "default": "app-routing.module.ts",
-      "x-prompt": "Enter Routing"
+      "x-prompt": "Enter Routing Module Path"
+    },
+    "route": {
+      "type": "string",
+      "default": ":lang",
+      "x-prompt": "Enter Route name for Main Component"
     },
     "components": {
       "type": "array",

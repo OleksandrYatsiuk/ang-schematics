@@ -16,7 +16,6 @@ export function main(_options: IMainModuleSchema): Rule {
   return async (tree: Tree, _context: SchematicContext) => {
 
     _options = await createHost(tree, _options);
-    _options.path = _options.path ? normalize(_options.path) : _options.path;
 
     const templateSource = apply(url('./files'), [
       filter(path => filterFilesByName(path, _options.components.concat(['main']), 'components')),
@@ -24,7 +23,7 @@ export function main(_options: IMainModuleSchema): Rule {
         ...strings,
         ..._options
       }),
-      move(normalize(`${_options.srcDir}`))
+      move(normalize(_options.srcDir))
     ]);
 
     return chain([
@@ -39,8 +38,8 @@ export function main(_options: IMainModuleSchema): Rule {
 function updateMainModuleInRoutes(options: IMainModuleSchema): Rule {
   return (tree: Tree) => {
     const source = parseTsFileToSource(tree, options.srcDir, options.routingModule);
-    const route: IRouteModule = {
-      routeName: ':lang',
+    const route: IRouteModule[] = [{
+      routeName: options.route,
       lazy: false,
       otherContent: "component: MainComponent,\ncanActivate: [LangGuard]",
       importsList: [
@@ -57,8 +56,8 @@ function updateMainModuleInRoutes(options: IMainModuleSchema): Rule {
           path: '@angular/router'
         }
       ]
-    }
-    const changes = insertRoutes(options.routingModule, source, [route]);
+    }]
+    const changes = insertRoutes(options.routingModule, source, route);
     const importChanges = addImportToModule(source, options.routingModule, 'RouterModule.forRoot(routes)', '@angular/router');
 
     writeToRight(tree, changes.concat(importChanges), options.srcDir + '/' + options.routingModule);

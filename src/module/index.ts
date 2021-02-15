@@ -4,7 +4,6 @@ import {
 } from '@angular-devkit/schematics';
 import { strings } from '@angular-devkit/core';
 import { MenuOptions } from './schema';
-import { findModuleFromOptions } from '@schematics/angular/utility/find-module';
 import { createHost } from '../utils/workspace-utils';
 import { insertRoutes, IRouteModule } from '../utils/routes-utils';
 import { parseTsFileToSource } from '../utils/parse-utils';
@@ -16,12 +15,11 @@ export default function (_options: MenuOptions): Rule {
 
         _options = await createHost(tree, _options);
 
-        _options.module = _options.module || findModuleFromOptions(tree, _options) || '';
         const templateSource = apply(url('./files'), [
             template({
                 ...strings, ..._options
             }),
-            move(`${_options.srcDir}`)
+            move(_options.srcDir)
         ]);
         return chain([
             branchAndMerge(chain([
@@ -48,8 +46,8 @@ function updateRoutes(options: MenuOptions): Rule {
                 lazy: true
             }];
 
-        const routingModulePath = options.srcDir + '/' + options.module;
-        const source = parseTsFileToSource(tree, options.srcDir, options.module);
+        const routingModulePath = options.srcDir + '/' + options.routingModule;
+        const source = parseTsFileToSource(tree, options.srcDir, options.routingModule);
 
         const changes = insertRoutes(routingModulePath, source, route);
         writeToRight(tree, changes, routingModulePath);

@@ -6,7 +6,7 @@
   "properties": {
     "routingModule": {
       "type": "string",
-      "default": "app.module.ts"
+      "default": "app-routing.module.ts"
     },
     "modules": {
       "type": "array",

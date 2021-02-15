@@ -1,40 +1,15 @@
 {
   "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
-    "module": {
-      "description": "Generate module and update router module",
-      "factory": "./module/index",
-      "schema": "./module/schema.json",
-      "aliases": ["m"]
-    },
     "ng-add": {
       "description": "Add library to Angular project dependencies and install it.",
       "factory": "./ng-add/index#ngAdd"
     },
-    "guard": {
-      "description": "Add guards to Angular project",
-      "factory": "./guard/index#guard",
-      "schema": "./guard/schema.json"
-    },
-    "service": {
-      "description": "Add services to Angular project",
-      "factory": "./service/index#service",
-      "schema": "./service/schema.json"
-    },
-    "modules": {
-      "description": "Add list of modules to Angular project",
-      "factory": "./modules/index#modules",
-      "schema": "./modules/schema.json"
-    },
-    "shared": {
-      "description": "Add shared module to Angular Project",
-      "factory": "./shared/index#shared",
-      "schema": "./shared/schema.json"
-    },
-    "directives": {
-      "description": "Add directive to Angular Project",
-      "factory": "./directives/index#directives",
-      "schema": "./directives/schema.json"
+    "spm-core-integration": {
+      "description": "Add spm core to project and app.module.ts",
+      "factory": "./spm-core-integration/index#spmCoreIntegration",
+      "schema": "./spm-core-integration/schema.json",
+      "aliases": ["spm"]
     },
     "site-variables": {
       "description": "Add site variables to main module.",
@@ -47,11 +22,36 @@
       "factory": "./main/index#main",
       "schema": "./main/schema.json"
     },
-    "spm-core-integration": {
-      "description": "Add spm core to project and app.module.ts",
-      "factory": "./spm-core-integration/index#spmCoreIntegration",
-      "schema": "./spm-core-integration/schema.json",
-      "aliases": ["spm"]
+    "shared": {
+      "description": "Add shared module to Angular Project",
+      "factory": "./shared/index#shared",
+      "schema": "./shared/schema.json"
+    },
+    "modules": {
+      "description": "Add list of modules to Angular project",
+      "factory": "./modules/index#modules",
+      "schema": "./modules/schema.json"
+    },
+    "guards": {
+      "description": "Add guards to Angular project",
+      "factory": "./elements/index#guards",
+      "schema": "./elements/schemas/schema-guards.json"
+    },
+    "services": {
+      "description": "Add services to Angular project",
+      "factory": "./elements/index#services",
+      "schema": "./elements/schemas/schema-services.json"
+    },
+    "directives": {
+      "description": "Add directive to Angular Project",
+      "factory": "./elements/index#directives",
+      "schema": "./elements/schemas/schema-directives.json"
+    },
+    "module": {
+      "description": "Generate module and update router module",
+      "factory": "./module/index",
+      "schema": "./module/schema.json",
+      "aliases": ["m"]
     }
   }
 }

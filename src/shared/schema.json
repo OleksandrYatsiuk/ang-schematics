@@ -7,7 +7,7 @@
     "declare": {
       "type": "boolean",
       "description": "Declare shared module to compiler path",
-      "default": false,
+      "default": true,
       "x-prompt": {
         "message": "Would you like the declare module to compiler options?",
         "type": "confirmation"
@@ -15,8 +15,9 @@
     },
     "components": {
       "type": "array",
-      "description": "The guard for project",
+      "description": "The components for project",
       "uniqueItems": true,
+      "default": ["breadcrumbs", "paginator"],
       "items": {
         "type": "string"
       },
@@ -24,19 +25,8 @@
         "message": "Which components would you like to generate?",
         "type": "list",
         "multiselect": true,
-        "items": [
-          "breadcrumbs",
-          "paginator"
-        ]
+        "items": ["breadcrumbs", "paginator"]
       }
-    },
-    "path": {
-      "type": "string",
-      "default": "app"
-    },
-    "sourceDir": {
-      "type": "string",
-      "default": "src"
     }
   }
 }

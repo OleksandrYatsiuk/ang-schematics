@@ -76,7 +76,8 @@ for generation build
 
 It is correct working status for re-run automatically:
 
-> [8:57:54] File change detected. Starting incremental compilation... <br> > [8:57:54] Found 0 errors. Watching for file changes.
+> [8:57:54] File change detected. Starting incremental compilation... <br>
+> [8:57:54] Found 0 errors. Watching for file changes.
 
 #### Importantly
 
@@ -110,8 +111,8 @@ Create app folder (src/app) with module and add angular.json file in project bef
 npm pack
 ```
 
-<details>
- <summary> Correct output:</summary>
+
+Correct output:
 
 ```
 npm notice === Tarball Details ===
@@ -126,8 +127,6 @@ npm notice total files:   117
 npm notice
 core-schematic-1.0.0.tgz
 ```
-
-</details>
 
 2. Copy path to file or insert .tgz file to Angular project.
 3. Add dependency to package.json file

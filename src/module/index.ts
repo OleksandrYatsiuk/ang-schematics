@@ -2,30 +2,58 @@ import {
     Rule, SchematicContext, Tree,
     apply, mergeWith, template, url, move, chain, branchAndMerge
 } from '@angular-devkit/schematics';
-import { normalize, strings } from '@angular-devkit/core';
+import { strings } from '@angular-devkit/core';
 import { MenuOptions } from './schema';
 import { findModuleFromOptions } from '@schematics/angular/utility/find-module';
-import { addLazyLoadingRouteToNgModule } from '../utils/ng-module-utils';
+import { createHost } from '../utils/workspace-utils';
+import { insertRoutes, IRouteModule } from '../utils/routes-utils';
+import { parseTsFileToSource } from '../utils/parse-utils';
+import { writeToRight } from '../utils/writing-utils';
 
 
 export default function (_options: MenuOptions): Rule {
-    return (tree: Tree, _context: SchematicContext) => {
-        _options.path = _options.path ? normalize(_options.path) : _options.path;
+    return async (tree: Tree, _context: SchematicContext) => {
+
+        _options = await createHost(tree, _options);
 
         _options.module = _options.module || findModuleFromOptions(tree, _options) || '';
         const templateSource = apply(url('./files'), [
             template({
-                ...strings,
-                ..._options
+                ...strings, ..._options
             }),
-            move(`${_options.sourceDir}/${_options.path}`)
+            move(`${_options.srcDir}`)
         ]);
-        const rule = chain([
+        return chain([
             branchAndMerge(chain([
                 mergeWith(templateSource),
-                addLazyLoadingRouteToNgModule(_options)
+                updateRoutes(_options)
             ]))
         ]);
-        return rule(tree, _context);
     };
+}
+
+
+function updateRoutes(options: MenuOptions): Rule {
+    return (tree: Tree) => {
+
+        const path = './module-' + strings.dasherize(options.name) + '/'
+            + strings.dasherize(options.name)
+            + '.module';
+
+        const route: IRouteModule[] = [
+            {
+                classifyModuleName: strings.classify(options.name),
+                modulePath: path,
+                routeName: options.route,
+                lazy: true
+            }];
+
+        const routingModulePath = options.srcDir + '/' + options.module;
+        const source = parseTsFileToSource(tree, options.srcDir, options.module);
+
+        const changes = insertRoutes(routingModulePath, source, route);
+        writeToRight(tree, changes, routingModulePath);
+
+        return tree;
+    }
 }

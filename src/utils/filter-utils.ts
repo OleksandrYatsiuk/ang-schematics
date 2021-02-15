@@ -8,10 +8,9 @@
 
 export function filterFilesByName(path: string, selected: string[], folder = ''): boolean {
     if (path.includes(folder) && folder !== '') {
-        const res = selected.filter(p => path.match(p))[0]
-        return res && res.length > 0 ? true : false
-    } else {
-        return true;
+        const res = selected.filter(p => path.match(p))[0];
+        return res && res.length > 0 ? true : false;
     }
+    return true;
 
 }

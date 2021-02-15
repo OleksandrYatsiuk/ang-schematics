@@ -22,4 +22,4 @@ const routes: Routes = [
   ],
   exports: []
 })
-export class NewsModule { }
+export class ModuleNews { }

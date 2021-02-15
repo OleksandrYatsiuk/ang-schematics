@@ -78,10 +78,10 @@ export function getVariableDeclaration(source: ts.SourceFile, identifier: string
     const nodes = getSourceNodes(source).map((n: ts.Node) => n)
         .filter((n: ts.Node) => n.kind === ts.SyntaxKind.VariableDeclaration)
         .filter((n: ts.Node) => n.getChildren().findIndex(c => c.kind === ts.SyntaxKind.Identifier && c.getText() == identifier) !== -1)
-        return nodes[nodes.length - 1];
+    return nodes[nodes.length - 1];
 }
 
-export function getFunctionDeclaration(source: ts.SourceFile, identifier: string): ts.Node | undefined {
+export function getFunctionDeclaration(source: ts.SourceFile, identifier: string): ts.Node {
 
     const nodes = getSourceNodes(source).map((n: ts.Node) => n)
         .filter((n: ts.Node) => n.kind === ts.SyntaxKind.FunctionDeclaration)

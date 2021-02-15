@@ -4,6 +4,11 @@
   "title": "Service Schema",
   "type": "object",
   "properties": {
+    "routingModule": {
+      "type": "string",
+      "default": "app-routing.module.ts",
+      "x-prompt": "Enter Routing"
+    },
     "components": {
       "type": "array",
       "description": "The guard for project",
@@ -17,18 +22,6 @@
         "multiselect": true,
         "items": ["card-complex", "card-event", "card-planing"]
       }
-    },
-    "routingModule": {
-      "type": "string",
-      "default": "app.module.ts"
-    },
-    "path": {
-      "type": "string",
-      "default": "app"
-    },
-    "sourceDir": {
-      "type": "string",
-      "default": "src"
     }
   }
 }

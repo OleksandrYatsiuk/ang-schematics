@@ -1,8 +1,11 @@
-import { apply, branchAndMerge, chain, filter, move, Rule, SchematicContext, template, Tree, url } from '@angular-devkit/schematics';
+import {
+  apply, chain, filter, mergeWith, move, Rule,
+  SchematicContext, template, Tree, url
+} from '@angular-devkit/schematics';
 import { filterFilesByName } from '../utils/filter-utils';
 import { normalize, strings } from '@angular-devkit/core';
 import { createHost } from '../utils/workspace-utils';
-import { insertRoute, IRouteModule } from '../utils/routes-utils';
+import { insertRoutes, IRouteModule } from '../utils/routes-utils';
 import { IMainModuleSchema } from './schema';
 import { parseTsFileToSource } from '../utils/parse-utils';
 import { writeToRight } from '../utils/writing-utils';
@@ -16,7 +19,7 @@ export function main(_options: IMainModuleSchema): Rule {
     _options.path = _options.path ? normalize(_options.path) : _options.path;
 
     const templateSource = apply(url('./files'), [
-      filter(path => filterFilesByName(path, _options.components, 'components')),
+      filter(path => filterFilesByName(path, _options.components.concat(['main']), 'components')),
       template({
         ...strings,
         ..._options
@@ -24,12 +27,9 @@ export function main(_options: IMainModuleSchema): Rule {
       move(normalize(`${_options.srcDir}`))
     ]);
 
-    templateSource;
     return chain([
-      branchAndMerge(chain([
-        // mergeWith(templateSource),
-        updateMainModuleInRoutes(_options)
-      ]))
+      mergeWith(templateSource),
+      updateMainModuleInRoutes(_options)
     ]);
 
   };
@@ -41,7 +41,6 @@ function updateMainModuleInRoutes(options: IMainModuleSchema): Rule {
     const source = parseTsFileToSource(tree, options.srcDir, options.routingModule);
     const route: IRouteModule = {
       routeName: ':lang',
-      modulePath: './module-main/main.component.ts',
       lazy: false,
       otherContent: "component: MainComponent,\ncanActivate: [LangGuard]",
       importsList: [
@@ -51,7 +50,7 @@ function updateMainModuleInRoutes(options: IMainModuleSchema): Rule {
         },
         {
           model: 'MainComponent',
-          path: './module-main/main.component.ts'
+          path: './module-main/components/main/main.component'
         },
         {
           model: 'Route',
@@ -59,7 +58,7 @@ function updateMainModuleInRoutes(options: IMainModuleSchema): Rule {
         }
       ]
     }
-    const changes = insertRoute(options.routingModule, source, route);
+    const changes = insertRoutes(options.routingModule, source, [route]);
     const importChanges = addImportToModule(source, options.routingModule, 'RouterModule.forRoot(routes)', '@angular/router');
 
     writeToRight(tree, changes.concat(importChanges), options.srcDir + '/' + options.routingModule);

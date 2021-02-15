@@ -11,17 +11,6 @@
         "index": 0
       }
     },
-    "path": {
-      "type": "string",
-      "default": "app"
-    },
-    "appRoot": {
-      "type": "string"
-    },
-    "sourceDir": {
-      "type": "string",
-      "default": "src"
-    },
     "route": {
       "type": "string",
       "default": "root",

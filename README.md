@@ -38,12 +38,14 @@ Command       |  Link                            |Description
 ------------- | ---------------------------------|-------------
 add           |-                                 | Install package to project
 site-variables|[More details](docs/shared.md)    | Create Site variables in app.module.ts
+spm           |[More details](docs/spm.md)       | Implementation spm-core lib to project
+main          |[More details](docs/main.md)      | Generate main module with components
 shared        |[More details](docs/shared.md)    | Generate Shared Module and some components
 directives    |[More details](http://github.com) | Generate directive from available list
 services      |[More details](http://github.com) | Generate services from available list
 modules       |[More details](http://github.com) | Generate modules from available list
 guards        |[More details](http://github.com) | Generate guards from available list
-module        |[More details](docs/shared.md)    | Generate empty module with standart params
+module        |[More details](docs/shared.md)    | Generate empty module with standard params
 
 
 
@@ -84,8 +86,8 @@ When compilation contains some errors building will not be completed and all cha
 ```
 npm pack
 ```
-
-Correct output:
+<details>
+ <summary> Correct output:</summary>
 
 ```
 npm notice === Tarball Details === 
@@ -100,6 +102,8 @@ npm notice total files:   117
 npm notice 
 core-schematic-1.0.0.tgz
 ```
+
+</details>
 
 2. Copy path to file or insert .tgz file to Angular project.
 3. Add dependency to package.json file

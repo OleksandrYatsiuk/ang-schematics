@@ -1,34 +1,26 @@
 {
-    "$schema": "http://json-schema.org/schema",
-    "id": "SchemanticsForModule",
-    "title": "Module Schema",
-    "type": "object",
-    "properties": {
-      "path": {
-        "type": "string",
-        "default": "app"
-      },
-      "modules": {
-        "type": "array",
-        "description": "The guard for project",
-        "uniqueItems": true,
-        "items": {
-          "type": "string"
-        },
-        "x-prompt": {
-          "message": "Which module would you like to generate?",
-          "type": "list",
-          "multiselect": true,
-          "items": ["module-news", "module-event-item"]
-        }
-      },
-      "appRoot": {
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchemanticsForModule",
+  "title": "Module Schema",
+  "type": "object",
+  "properties": {
+    "routingModule": {
+      "type": "string",
+      "default": "app.module.ts"
+    },
+    "modules": {
+      "type": "array",
+      "description": "The guard for project",
+      "uniqueItems": true,
+      "items": {
         "type": "string"
       },
-      "sourceDir": {
-        "type": "string",
-        "default": "src"
+      "x-prompt": {
+        "message": "Which module would you like to generate?",
+        "type": "list",
+        "multiselect": true,
+        "items": ["module-news", "module-event-item"]
       }
     }
   }
-  
+}

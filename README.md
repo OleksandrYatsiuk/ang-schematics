@@ -49,10 +49,10 @@ The ng g command will generate element in Angular project
 
 #### Useful materials
 
-[Angular blog](https://blog.angular.io/schematics-an-introduction-dc1dfbc2a2b2)
-[Angular API](https://angular.io/guide/schematics)
-[Schematics github -> utility](https://github.com/angular/angular-cli/tree/master/packages/schematics/angular/utility)
-[Habr](https://habr.com/ru/post/469509/)
+- [Angular Blog](https://blog.angular.io/schematics-an-introduction-dc1dfbc2a2b2)
+- [Angular Guide](https://angular.io/guide/schematics)
+- [Schematics Utility](https://github.com/angular/angular-cli/tree/master/packages/schematics/angular/utility)
+- [Habr](https://habr.com/ru/post/469509/)
 
 Install all dependencies:
 

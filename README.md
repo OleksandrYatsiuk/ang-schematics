@@ -32,18 +32,18 @@ The ng g command will generate element in Angular project
 
 ### List of available commands
 
-| Command        | Link                             | Description                                |
-| -------------- | -------------------------------- | ------------------------------------------ |
-| add            | -                                | Install package to project                 |
-| site-variables | [More details](docs/shared.md)   | Create Site variables in app.module.ts     |
-| spm            | [More details](docs/spm.md)      | Implementation spm-core lib to project     |
-| main           | [More details](docs/main.md)     | Generate main module with components       |
-| shared         | [More details](docs/shared.md)   | Generate Shared Module and some components |
-| directives     | [More details](docs/elements.md) | Generate directive from available list     |
-| services       | [More details](docs/elements.md) | Generate services from available list      |
-| modules        | [More details](docs/modules.md)  | Generate modules from available list       |
-| guards         | [More details](docs/elements.md) | Generate guards from available list        |
-| module         | [More details](docs/shared.md)   | Generate empty module with standard params |
+| Command        | Link                                   | Description                                |
+| -------------- | -------------------------------------- | ------------------------------------------ |
+| add            | -                                      | Install package to project                 |
+| site-variables | [More details](docs/site-variables.md) | Create Site variables in app.module.ts     |
+| spm            | [More details](docs/spm.md)            | Implementation spm-core lib to project     |
+| main           | [More details](docs/main.md)           | Generate main module with components       |
+| shared         | [More details](docs/shared.md)         | Generate Shared Module and some components |
+| directives     | [More details](docs/elements.md)       | Generate directive from available list     |
+| services       | [More details](docs/elements.md)       | Generate services from available list      |
+| modules        | [More details](docs/modules.md)        | Generate modules from available list       |
+| guards         | [More details](docs/elements.md)       | Generate guards from available list        |
+| module         | [More details](docs/module.md)         | Generate empty module with standard params |
 
 ## ⚒ Develop
 
